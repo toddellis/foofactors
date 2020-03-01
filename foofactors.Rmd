@@ -131,3 +131,4 @@ load_all()
 fcount(iris$Species)
 ```
 
+This stage was uploaded to our Github repo, and we can now edit a README.Rmd file using `use_readme_rmd()`.
