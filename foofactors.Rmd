@@ -12,6 +12,10 @@ library(tidyverse)
 library(fs)
 ```
 
+## Create package directory
+
+This is just to be run once, behind the scenes.
+
 ```{r}
 #create_package(path = 'C:/Projects/Github/foofactors')
 ```
@@ -24,3 +28,30 @@ This created a number of files:
 (*) NAMESPACE -- declares functions to be exported and functions needed to be imported to function.
 (*) R/ -- contains .R files with function definitions.
 (*) foofactors.Rproj -- RStudio project file.
+
+## Initializing Git
+
+Similar to package creation, this initializes Git relationship and creates an initial commit. Can include commit message.
+
+```{r}
+#use_git()
+```
+
+## Writing first functions
+
+```{r}
+## See how factors play together
+(a <- factor(c('character', 'hits', 'your', 'eyeballs')))
+(b <- factor(c('but', 'integer', 'where it', 'counts')))
+c(a, b)
+
+## concatenate those properly!
+factor(c(as.character(a), as.character(b)))
+
+## create the function to do this
+fbind <- function(a, b) {
+  factor(c(as.character(a), as.character(b)))
+}
+```
+
+
