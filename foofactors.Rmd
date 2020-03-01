@@ -132,3 +132,8 @@ fcount(iris$Species)
 ```
 
 This stage was uploaded to our Github repo, and we can now edit a README.Rmd file using `use_readme_rmd()`.
+
+Once finishing edits on the .Rmd file, run `rmarkdown::render('README.Rmd')` to render the .md file for GitHub. This needs to be run anytime the .Rmd file is edited.
+
+*Note*: Since this tutorial started, updates to the tidyverse using the `vctrs` package led to errors here in package dependencies and I had to manually delete the past installation.
+
