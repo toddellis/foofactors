@@ -1,0 +1,26 @@
+---
+title: "package-development"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+### recommended libraries
+library(devtools)
+library(tidyverse)
+library(fs)
+```
+
+```{r}
+#create_package(path = 'C:/Projects/Github/foofactors')
+```
+
+This created a number of files:
+(*) .Rbuildignore -- lists files needed but not to be included in final built package.
+(*) .Rproj.user -- internal RStudio directory.
+(*) .gitignore -- ignores behind-the-scenes files from R and RStudio when pushing to Git.
+(*) DESCRIPTION -- Metadata file
+(*) NAMESPACE -- declares functions to be exported and functions needed to be imported to function.
+(*) R/ -- contains .R files with function definitions.
+(*) foofactors.Rproj -- RStudio project file.
