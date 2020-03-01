@@ -21,13 +21,14 @@ This is just to be run once, behind the scenes.
 ```
 
 This created a number of files:
-(*) .Rbuildignore -- lists files needed but not to be included in final built package.
-(*) .Rproj.user -- internal RStudio directory.
-(*) .gitignore -- ignores behind-the-scenes files from R and RStudio when pushing to Git.
-(*) DESCRIPTION -- Metadata file
-(*) NAMESPACE -- declares functions to be exported and functions needed to be imported to function.
-(*) R/ -- contains .R files with function definitions.
-(*) foofactors.Rproj -- RStudio project file.
+
+* `.Rbuildignore` -- lists files needed but not to be included in final built package.
+* `.Rproj.user` -- internal RStudio directory.
+* `.gitignore` -- ignores behind-the-scenes files from R and RStudio when pushing to Git.
+* `DESCRIPTION` -- Metadata file
+* `NAMESPACE` -- declares functions to be exported and functions needed to be imported to function.
+* `R/` -- contains .R files with function definitions.
+* `foofactors.Rproj` -- RStudio project file.
 
 ## Initializing Git
 
@@ -49,9 +50,84 @@ c(a, b)
 factor(c(as.character(a), as.character(b)))
 
 ## create the function to do this
-fbind <- function(a, b) {
-  factor(c(as.character(a), as.character(b)))
-}
+#fbind <- function(a, b) {
+#  factor(c(as.character(a), as.character(b)))
+#}
 ```
 
+`fbind` was written to `fbind.R` in the `R/` folder. We can test it using:
+
+* `use_r('fbind')`
+* `load_all()`
+
+The function does not show up in the environment, however, as this simulates loading a library (e.g., `library(foofactors)`).
+
+```{r}
+load_all()
+```
+
+
+Use `check()` to verify everything is in working order.
+
+This outputs 2 warnings:
+
+1. `Non-standard license specification`
+2. `Undocumented code objects: 'fbind'`
+
+And 1 note:
+
+1. `Non-standard file/directory found at top level: 'foofactors.Rmd'`
+
+We can add a standard license via `use_mit_license('Todd Ellis')` to solve 1. 
+
+The latter requires creating a .Rd file with markup language offering details on the function, but we can use the Roxygen2 library to do this int he .R file itself.
+
+See top of `fbind.R` for an example. Once written, run with `document()`.
+
+Once that's done, run `check()` again, and then `install()`.
+
+Reset R or empty the workspace and then we can use the library as it is in R:
+
+```{r}
+library(foofactors)
+
+a <- factor(c("character", "hits", "your", "eyeballs"))
+b <- factor(c("but", "integer", "where it", "counts"))
+
+fbind(a, b)
+```
+
+It works! We can now create unit tests (not really sure what this mean...) by using `use_testthat()`.
+
+This creates empty test files for us to fill.
+
+Create a test file using:
+
+* `use_test('fbind')`
+
+Then run the test (and all other test files in the package) using `test()` or `check()`.
+
+```{r}
+library(testthat)
+load_all() # load tests
+test()
+```
+
+## Using other packages
+
+Use `use_package()` to make calls to other packages. *All* used packages need to be pulled, including base tools like the stats or utils libraries.
+
+Our next function uses part of the `forcats` library.
+
+```{r}
+#use_package('forcats')
+#use_r('fcount')
+```
+
+This throws an import reference to the description file, and creates a new .R file for the function `fcount()`.
+
+```{r}
+load_all()
+fcount(iris$Species)
+```
 
